@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="/home/ubuntu/catkin_ws/src/catvehicle/worlds/skidpad.world"/>
+  </include>
+</launch>

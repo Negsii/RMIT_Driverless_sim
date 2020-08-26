@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+
+Summary:
+This launch file loads the worlds and models for the catvehicle
+
+-->
+
+<launch>
+
+	  <arg name="paused" default="false"/>
+	  <arg name="use_sim_time" default="true"/>
+	  <arg name="gui" default="false"/>
+	  <arg name="headless" default="false"/>
+	  <arg name="debug" default="false"/>
+      <arg name="obstaclestopper" default="true"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find catvehicle)/worlds/skidpad.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+<group ns="catvehicle">
+<param name="robot_description"
+         command="$(find xacro)/xacro.py '$(find catvehicle)/urdf/catvehicle.xacro' roboname:='catvehicle'" />
+<include file="$(find catvehicle)/launch/catvehicle.launch">
+    <arg name="robot_name" value="catvehicle"/>
+    <arg name="obstaclestopper" value="$(arg obstaclestopper)"/>
+    <arg name="init_pose" value="-x 0 -y 0 -z 0.5"/>
+    <arg name="config_file" value="catvehicle_control.yaml"/>
+</include>
+</group>
+
+
+</launch>
