@@ -1,7 +1,7 @@
 # RMIT Driverless Simulator.
 Based apon CAT vehicle, see below for details.
 To use as is of 26/8/2020,
-1: install cat vehicle sim as below.
+1: install cat vehicle sim as below
 2: download this repository onto your desktop
 3: Open files in ubuntuand use the command (CTRL+H) to see hidden folders. 
 4. Navigate to ~/Home/.gazebo/models/
