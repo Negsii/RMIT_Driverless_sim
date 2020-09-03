@@ -1,6 +1,6 @@
 # RMIT Driverless Simulator.  
   
-Based apon CAT vehicle, see below for details.  
+Based upon CAT vehicle simulator, see below for details.  
 To use as is of 26/8/2020,  
 1: install cat vehicle sim as below  
 2: download this repository onto your desktop  
