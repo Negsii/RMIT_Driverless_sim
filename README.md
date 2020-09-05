@@ -1,6 +1,4 @@
-![SLAM image](https:/github.com/Slam screenshot.png)
-
-
+![SLAM image](/Slam screenshot.png)
 
 
 # RMIT Driverless Simulator.  
