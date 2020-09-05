@@ -1,0 +1,80 @@
+CATVEHICLE SIM
+roslaunch catvehicle catvehicle_spawn.launch robot:=catvehicle X:=0 Y:=20 \
+yaw:=1.57079632679
+
+roslaunch catvehicle catvehicle_neighborhood.launch
+
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py /cmd_vel:=/catvehicle/cmd_vel
+
+
+f1/f10 simulator sourcing
+source ~/catkin_ws/devel/setup.bash
+
+Mynteye sourcing
+source ./wrappers/ros/devel/setup.bash
+
+catkin sourcing
+source /opt/ros/melodic/setup.bash
+source ~/catkin_ws/devel/setup.bash
+
+
+catkin sourcing for catkin_make_isolated
+source install_isolated/setup.bash
+
+bashrc editing
+gedit ~/.bashrc
+
+launch ekf_localisation node
+rosrun robot_localization ekf_localization_node
+
+RTABMAP GAZEBO RTABVIZ
+roslaunch rtabmap_ros rtabmap.launch \
+   stereo:=true \
+   left_image_topic:=/catvehicle/triclops/left/triclops_image \
+   right_image_topic:=/catvehicle/triclops/right/triclops_image \
+   left_camera_info_topic:=/catvehicle/triclops/left/camera_info \
+   right_camera_info_topic:=/catvehicle/triclops/right/camera_info \
+   frame_id:=catvehicle/triclops_link \
+   rtabmap_args:="-d"
+
+ROSRUN Rtabmap Doesnt work currently
+rosrun rtabmap_ros rtabmap _database_path:=IROS14-kinect-challenge.db \
+stereo:=true \
+left_image_topic:=/catvehicle/triclops/left/triclops_image \
+right_image_topic:=/catvehicle/triclops/right/triclops_image \
+left_camera_info_topic:=/catvehicle/triclops/left/camera_info \
+right_camera_info_topic:=/catvehicle/triclops/right/camera_info \
+frame_id:=catvehicle/triclops_link \
+ --delete_db_on_start
+
+RTABMAP COLOR RTABVIZ
+roslaunch rtabmap_ros rtabmap.launch \
+   stereo:=true \
+   left_image_topic:=/mynteye/left_rect/image_rect_color \
+   right_image_topic:=/mynteye/right_rect/image_rect_color \
+   left_camera_info_topic:=/mynteye/left_rect/camera_info \
+   right_camera_info_topic:=/mynteye/right_rect/camera_info \
+   frame_id:=mynteye_link_frame \
+   rtabmap_args:="-d"
+
+
+   roslaunch rtabmap_ros rtabmap_base_working.launch \
+      stereo:=true \
+      left_image_topic:=/mynteye/left_rect/image_rect_color \
+      right_image_topic:=/mynteye/right_rect/image_rect_color \
+      left_camera_info_topic:=/mynteye/left_rect/camera_info \
+      right_camera_info_topic:=/mynteye/right_rect/camera_info \
+      frame_id:=mynteye_link_frame \
+      rtabmap_args:="-d"
+
+RTABMAP COLOR RVIZ
+roslaunch rtabmap_ros rtabmap.launch \
+   stereo:=true \
+   rviz:=true \
+   rtabmapviz:=false \
+   left_image_topic:=/mynteye/left_rect/image_rect_color \
+   right_image_topic:=/mynteye/right_rect/image_rect_color \
+   left_camera_info_topic:=/mynteye/left_rect/camera_info \
+   right_camera_info_topic:=/mynteye/right_rect/camera_info \
+   frame_id:=mynteye_link_frame \
+   rtabmap_args:="-d" \

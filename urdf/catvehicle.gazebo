@@ -171,6 +171,7 @@ http://gazebosim.org/tutorials/?tut=ros_control#Prerequisites
  <!--                <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
                    <topicName>/cat/laser/scan</topicName>
                       <frameName>laser_link</frameName>  -->
+<!--
 			   <plugin name="laser_controller" filename="libgazebo_ros_block_laser.so">
 			      <frameName>laser_link</frameName>
 			      <hokuyoMinIntensity>101</hokuyoMinIntensity>
@@ -178,7 +179,7 @@ http://gazebosim.org/tutorials/?tut=ros_control#Prerequisites
 			      <topicName>lidar_points</topicName>
 			      <gaussianNoise>0.02</gaussianNoise>
 			      <updateRate>5</updateRate>
-                 </plugin>
+                 </plugin> -->
       </sensor>
 </gazebo>
 

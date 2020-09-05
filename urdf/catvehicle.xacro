@@ -37,8 +37,8 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
 <robot name="$(arg roboname)" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:arg name="camera_left" default="true"/>
-    <xacro:arg name="camera_right" default="true"/>
+    <xacro:arg name="camera_left" default="false"/>
+    <xacro:arg name="camera_right" default="false"/>
     <xacro:arg name="triclops" default="true"/>
     <xacro:arg name="velodyne_points" default="true"/>
     <xacro:arg name="laser_points" default="true"/>
@@ -70,18 +70,19 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     anywhere -->
     <!-- Edited to length given by design spec sheet, was 4.4324092962 -->
     <xacro:property name="car_to_bumper" value="2.900"/>
-    <xacro:property name="car_COM_x" value="1.00"/>
+    <xacro:property name="car_COM_x" value="1.50"/>
     <xacro:property name="car_COM_y" value="0.000"/>
     <xacro:property name="car_COM_z" value="0.260"/>
 
     <!-- We are assuming that front bumper's height is half of the car's
     bounding box height -->
-    <xacro:property name="front_bumper_height" value="${car_height/2}"/>
+    <xacro:property name="front_bumper_height" value="0.3"/>
 
     <!--This is the car tread, i.e distance between right and left front wheels-->
     <!-- Edited to width given by design spec sheet, was 1.290-->
     <xacro:property name="car_width" value="1.140"/>
-    <xacro:property name="car_width_offset" value="0.05"/>
+    <xacro:property name="car_width_offset" value="0.10"/>
+    <xacro:property name="car_tyre_offset" value="0.1905"/>
 
     <!-- Inertial tensor of car body has been taken from meshlab after
     analyzing the 3D structure of car body -->
@@ -100,10 +101,10 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <xacro:property name="tyre_r" value="0.66"/>-->
 
     <xacro:property name="tyre_x" value="1.05"/>
-    <xacro:property name="tyre_front_x" value="1.55"/>
-    <xacro:property name="tyre_back_x" value="0"/>
-    <xacro:property name="tyre_y" value="0.590"/>
-    <xacro:property name="tyre_r" value="0.10"/>
+    <xacro:property name="tyre_front_x" value="1.9500"/>
+    <xacro:property name="tyre_back_x" value="0.45"/>
+    <xacro:property name="tyre_y" value="0.420"/> <!--edited to 1.590 from 0.590-->
+    <xacro:property name="tyre_r" value="0.15"/>
 
     <!--Below is the thickness of the car's tyre-->
     <!-- edited for eletric vehicles 18inch/7.5 inch wheels-->
@@ -163,23 +164,26 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <xacro:include filename="$(find catvehicle)/urdf/catvehicle.gazebo"/>
 
 
-    <xacro:if value="${velodyne_points}">
+    <xacro:if value="${velodyne_points}"> 
         <!-- You can pass parameters in order to change the max/min
         horizontal angles of the velodyne sensors. These are interpreted
         in the velodyne_points gazebo file -->
+
         <xacro:arg name="velodyne_min_angle" default="-0.4"/>
         <xacro:arg name="velodyne_max_angle" default="0.4"/>
         <xacro:property name="velodyne_min_angle" value="$(arg velodyne_min_angle)"/>
         <xacro:property name="velodyne_max_angle" value="$(arg velodyne_max_angle)"/>
-
         <xacro:include filename="$(find catvehicle)/urdf/catvehicle_velodyne_points.gazebo"/>
     </xacro:if>
+
     <xacro:if value="${camera_right}">
         <xacro:include filename="$(find catvehicle)/urdf/catvehicle_right_camera.gazebo"/>
     </xacro:if>
+
     <xacro:if value="${camera_left}">
         <xacro:include filename="$(find catvehicle)/urdf/catvehicle_left_camera.gazebo"/>
     </xacro:if>
+
     <xacro:if value="${triclops}">
         <xacro:include filename="$(find catvehicle)/urdf/catvehicle_triclops.gazebo"/>
     </xacro:if>
@@ -198,14 +202,14 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         <collision>
             <origin xyz="0 0 ${base_height}" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://catvehicle/meshes/EE88_1.dae"/>
+                <mesh filename="package://catvehicle/meshes/EE88_2.dae"/>
             </geometry>
         </collision>
         <visual>
             <origin xyz="0 0 ${base_height}" rpy="0 0 0"/>
             <geometry>
 		<!-- edited "package://catvehicle/meshes/ford_escape_no_wheels_2.dae"/> to below-->
-                <mesh filename="package://catvehicle/meshes/EE88_1.dae"/>
+                <mesh filename="package://catvehicle/meshes/EE88_2.dae"/>
             </geometry>
         </visual>
     </link>
@@ -243,10 +247,10 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
     <link name="back_right_wheel_link">
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+            <origin xyz="0 0 0" rpy="0 0 -${PI}"/>
             <geometry>
                 <!--<cylinder length="${tyre_length}" radius="${tyre_radius}"/-->
-                <mesh filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
             <surface>
                 <friction>
@@ -270,12 +274,12 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         </collision>
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+            <origin xyz="0 0 0" rpy="0 0 -${PI}"/>
             <!--origin xyz="0 ${car_width_offset*2} 0.0" rpy="0 0 ${-PI/2}"/-->
             <geometry>
                 <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/>
                 <scale xyz="1 1 1"/-->
-                <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
         </visual>
 
@@ -303,10 +307,10 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
     <link name="back_left_wheel_link">
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/-->
-                <mesh filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
             <surface>
                 <friction>
@@ -330,11 +334,11 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         </collision>
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <!--origin xyz="0 ${-car_width_offset*2} 0.0" rpy="0 0 ${PI/2}"/-->
             <geometry>
                 <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/-->
-                <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
         </visual>
 
@@ -356,7 +360,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <joint name="front_right_steering_joint" type="revolute">
         <parent link="base_link"/>
         <child link="front_right_steering_link"/>
-        <origin xyz="${tyre_front_x} ${-car_width/2 - 2*str_length} ${tyre_r}" rpy="0 0 0"/>
+        <origin xyz="${tyre_front_x} ${-tyre_y-car_width_offset} ${tyre_r}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <limit effort="10000" lower="${-str_angle}" upper="${str_angle}" velocity="1000"/>
     </joint>
@@ -400,10 +404,10 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <link name="front_right_wheel_link">
         <collision>
             <!--origin xyz="0 0 0" rpy="${PI/2} 0 0"/-->
-            <origin xyz="0 0 0" rpy="0 0 ${-PI/2}"/>
+            <origin xyz="0 0.10 0" rpy="0 0 ${-PI}"/>
             <geometry>
                 <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/-->
-                <mesh filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
 
             <surface>
@@ -430,11 +434,11 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
         <visual>
             <!--origin xyz="0 0 0" rpy="${PI/2} 0 0"/-->
-            <origin xyz="0 ${car_width_offset*2} 0.0" rpy="0 0 ${PI/2}"/>
+            <origin xyz="0 0.10 0" rpy="0 0 ${-PI}"/>
             <geometry>
                 <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/>
                 <scale xyz="1 1 1"/-->
-                <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
                 </geometry>
         </visual>
 
@@ -452,7 +456,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <joint name="front_left_steering_joint" type="revolute">
         <parent link="base_link"/>
         <child link="front_left_steering_link"/>
-        <origin xyz="${tyre_front_x} ${car_width/2 + 2*str_length} ${tyre_r}" rpy="0 0 0"/>
+        <origin xyz="${tyre_front_x} ${tyre_y+car_width_offset} ${tyre_r}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <limit effort="10000" lower="${-str_angle}" upper="${str_angle}" velocity="1000"/>
     </joint>
@@ -500,10 +504,10 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         <parent link="front_left_wheel_joint"/>
         <collision>
             <!--origin xyz="0 0 0" rpy="${PI/2} 0 0"/-->
-            <origin xyz="0 0 0" rpy="0 0 ${-PI/2}"/>
+            <origin xyz="0 -0.10 0" rpy="0 0 0"/>
             <geometry>
                 <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/-->
-                <mesh filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+                <mesh filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
             <surface>
                 <friction>
@@ -528,10 +532,10 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
         <visual>
             <!--origin xyz="0 0 0" rpy="${PI/2} 0 0"/-->
-            <origin xyz="0 ${-car_width_offset*2} 0.0" rpy="0 0 ${-PI/2}"/>
+            <origin xyz="0 -0.10 0.0" rpy="0 0 0"/>
             <geometry>
             <!--cylinder length="${tyre_length}" radius="${tyre_radius}"/-->
-            <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel1.dae"/>
+            <mesh scale="1 1 1" filename="package://catvehicle/meshes/EE88_wheel2.dae"/>
             </geometry>
         </visual>
 
@@ -547,9 +551,9 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
 
     <!-- front laser-->
-
+	
     <joint name="front_laser_joint" type="fixed">
-        <origin xyz="${car_to_bumper/2 + front_laser_size} 0 ${front_bumper_height + front_laser_size/2 + 0.90}" rpy="0 0 0"/>
+        <origin xyz="${car_to_bumper + 0.1} 0 ${front_bumper_height + 0.15}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <parent link="base_link"/>
         <child link="front_laser_link"/>
@@ -560,8 +564,8 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
             <collision>
                 <origin xyz="0 0 0" rpy="0 0.0 0"/>
                 <geometry>
-                    <box size="${front_laser_size} ${front_laser_size} ${front_laser_size}"/>
-                </geometry>
+                    <box size="0.01 0.01 0.01"/>
+                </geometry> 
             </collision>
 
             <visual>
@@ -579,7 +583,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
                 izz="${(1/6)*front_laser_mass*front_laser_size*front_laser_size}" />
             </inertial>
             </link>
-
+<!--
     <joint name="camera_right_joint" type="fixed">
     <origin xyz="-0.75 -${car_width/2} ${0.725 + camera_box/2 + 1.25}" rpy="0 0 -${PI/2}"/>
         <axis xyz="0 0 1"/>
@@ -638,14 +642,27 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         </inertial>
     </link>
 
-
+-->
     <joint name="triclops" type="fixed">
-    <origin xyz="0.75 0 ${0.725 + sensor_box/2 + 1.2}" rpy="0 0 0"/>
+    <origin xyz="0.98 0 1.02" rpy="0 0 0"/> <!-- edited origin to line up with vehicle -->
         <axis xyz="0 0 1"/>
         <parent link="base_link"/>
         <child link="triclops_link"/>
     </joint>
 
+	<joint name="triclops_optical_joint" type="fixed">
+    <!-- these values have to be these values otherwise the gazebo camera
+        image won't be aligned properly with the frame it is supposedly
+        originating from -->
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    	<parent link="triclops_link"/>
+    	<child link="triclops_link_optical"/>
+  	</joint>
+
+    <link name="triclops_link_optical">
+    </link>
+
+	
     <link name="triclops_link">
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -668,11 +685,11 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         </inertial>
     </link>
 
-
+	
         <joint name="velodyne_joint" type="fixed">
-            <origin xyz="-0.5 0 ${sensor_box/2 + 0.01}" rpy="0 0 0"/>
+            <origin xyz="${car_to_bumper + 0.05} 0 ${front_bumper_height + 0.1}" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
-            <parent link="triclops_link"/>
+            <parent link="base_link"/>
             <child link="velodyne_link"/>
         </joint>
 

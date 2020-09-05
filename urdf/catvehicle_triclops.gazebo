@@ -87,8 +87,8 @@ http://gazebosim.org/tutorials/?tut=ros_control#Prerequisites
         <cameraName>triclops</cameraName>
         <imageTopicName>triclops_image</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>triclops_link</frameName>
-        <rightFrameName>triclops_link</rightFrameName>
+        <frameName>triclops_link_optical</frameName>
+        <rightFrameName>triclops_link_optical</rightFrameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
