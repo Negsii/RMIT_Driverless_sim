@@ -29,6 +29,7 @@ To use as is of 26/8/2020,
 6: To view cameras and lidar data and to visualise it use $ rosrun rviz rviz   
 6a: In rvis set Fixed Frame to catvehicle/odom, and use add to add lidar or cameras from topic menu. To add the robot use add and select RobotModel from 'By Display Type'. Then change Robot Description to catvehicle/robot_description and TF Prefix to catvehicle  
   
+![Github Logo](/gazebo_screenshot.png)
 
 # Cognitive and Autonomous Test Vehicle (CAT Vehicle) Testbed
 The CAT Vehicle is a ROS based simulator to facilitate the development of autonomous vehicle applications. This repository houses the files that utilize the Gazebo simulator, and additional interfaces to the physical CAT Vehicle Testbed available at the University of Arizona - Department of Electrical and Computer Engineering.
