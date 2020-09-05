@@ -164,7 +164,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <xacro:include filename="$(find catvehicle)/urdf/catvehicle.gazebo"/>
 
 
-    <xacro:if value="${velodyne_points}"> 
+    <xacro:if value="${velodyne_points}">
         <!-- You can pass parameters in order to change the max/min
         horizontal angles of the velodyne sensors. These are interpreted
         in the velodyne_points gazebo file -->
@@ -215,8 +215,8 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     </link>
 
     <joint name="inertial_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="main_mass"/>
+        <parent link="base_link"/> 
+        <child link="main_mass"/> <!-- previously main_mass -->
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
@@ -551,7 +551,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
 
 
     <!-- front laser-->
-	
+
     <joint name="front_laser_joint" type="fixed">
         <origin xyz="${car_to_bumper + 0.1} 0 ${front_bumper_height + 0.15}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
@@ -565,7 +565,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
                 <origin xyz="0 0 0" rpy="0 0.0 0"/>
                 <geometry>
                     <box size="0.01 0.01 0.01"/>
-                </geometry> 
+                </geometry>
             </collision>
 
             <visual>
@@ -662,7 +662,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
     <link name="triclops_link_optical">
     </link>
 
-	
+
     <link name="triclops_link">
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -685,7 +685,7 @@ http://www.car-engineer.com/vehicle-inertia-calculation-tool/
         </inertial>
     </link>
 
-	
+
         <joint name="velodyne_joint" type="fixed">
             <origin xyz="${car_to_bumper + 0.05} 0 ${front_bumper_height + 0.1}" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
