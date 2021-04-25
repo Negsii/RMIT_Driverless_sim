@@ -27,7 +27,7 @@ To use as is of 26/8/2020,
 3: In a new terminal run $ gzclient  
 4: This will open gazebo, click on gazebo and the model should be in the enviroment you launched  
 # optional   
-5: To move the vehicle open a new terminal and run $ rosrun telop_twist_keyboard telop_twist_keyboard.py /cmd_vel:=/catvehicle/cmd_vel  
+5: To move the vehicle open a new terminal and run $ rosrun teleop_twist_keyboard teleop_twist_keyboard.py /cmd_vel:=/catvehicle/cmd_vel  
 5a: This window must be open and currently clicked on to recieve keystrokes. speed is very slow to begin so hold q to increase speed.  
 6: To view cameras and lidar data and to visualise it use $ rosrun rviz rviz   
 6a: In rvis set Fixed Frame to catvehicle/odom, and use add to add lidar or cameras from topic menu. To add the robot use add and select RobotModel from 'By Display Type'. Then change Robot Description to catvehicle/robot_description and TF Prefix to catvehicle  
