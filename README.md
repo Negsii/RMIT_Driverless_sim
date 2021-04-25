@@ -9,8 +9,9 @@ Based upon CAT vehicle simulator, see below for details.
 To use as is of 26/8/2020,  
 1: install cat vehicle sim as below  
 2: download this repository onto your desktop  
+2a: *download and install gazebo from http://gazebosim.org/tutorials?tut=install_ubuntu
 3: Open files in ubuntuand use the command (CTRL+H) to see hidden folders.   
-4. Navigate to ~/Home/.gazebo/models/  
+4. Navigate to ~/Home/.gazebo/models/  - *you may need to create this folder if it doesn't already exist
 5: Open a new tab in files (CTRL+T) and navigate to the dowloaded repository  
 6: In the tracks folder, copy all folders (acceleration, big_track, skidpad, small_track)  
 7. Paste these in ~/Home/.gazebo/models/  
